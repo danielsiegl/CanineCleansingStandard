@@ -3,6 +3,10 @@
 
 ### Disclaimer:
 This is a fictive Standard to show case how to develop a standard using GitHub, SmartGit and Obsidian.
+
+### Published version:
+(https://danielsiegl.github.io/CanineCleansingStandard/)
+
 ### **The Canine Cleansing Standard (CCS-2024)**  
 A systematic guide to maintaining optimal cleanliness and hygiene for your dog.
 
