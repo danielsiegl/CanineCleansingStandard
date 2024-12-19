@@ -5,4 +5,5 @@
 
 ## **5.2. Air or Blow-Drying**  
 - Use a low-heat setting and maintain a safe distance (20–30 cm).
-- This is very undefined - what is a proper temprature and air speed
+- Not more than 45 Degree Celsius
+- Not more than 20 m/s
