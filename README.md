@@ -1,5 +1,5 @@
 
-![](https://github.com/danielsiegl/CanineCleansingStandard/blob/main/Images/Dog%20Small.jpeg?raw=true)
+![](/Images/Dog%20Small.jpeg)
 
 ### Disclaimer:
 This is a fictive Standard to show case how to develop a standard using GitHub, SmartGit and Obsidian.
