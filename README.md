@@ -5,7 +5,9 @@ If you want to contribute please <a href="{{ site.github.repository_url }}/edit/
 This is a fictive Standard to show case how to develop a standard using [GitHub](https://github.com/danielsiegl/CanineCleansingStandard), [SmartGit](https://www.syntevo.com/smartgit/) and [Obsidian](https://obsidian.md/).
 
 ### Published version:
-https://danielsiegl.github.io/CanineCleansingStandard/
+[https://danielsiegl.github.io/CanineCleansingStandard/](https://danielsiegl.github.io/CanineCleansingStandard/)
+### Main Repository:
+[https://github.com/danielsiegl/CanineCleansingStandard/](https://github.com/danielsiegl/CanineCleansingStandard/)
 
 ### **The Canine Cleansing Standard (CCS-2025)**  
 A systematic guide to maintaining optimal cleanliness and hygiene for your dog.
@@ -19,8 +21,3 @@ A systematic guide to maintaining optimal cleanliness and hygiene for your dog.
 7. [Frequency Recommendations](07_Frequency_Recommendations.md)
 8. [Emergency Exceptions](08_Emergency_Exceptions.md)
 9. [Endorsement](09_Endorsement.md)
-
-[05_Drying_Protocol](05_Drying_Protocol.md)
-
-
-![](Images/Dog%20Small.jpeg)
