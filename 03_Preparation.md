@@ -1,4 +1,4 @@
-
+If you want to contribute please <a href="{{ site.github.repository_url }}/edit/main/{{ page.path'}}/">Propose your Changes</a>
 # **3. Preparation**  
 
 ## **3.1. Pre-Cleaning Check**  

@@ -1,3 +1,4 @@
+If you want to contribute please <a href="{{ site.github.repository_url }}/edit/main/{{ page.path'}}/">Propose your Changes</a>
 # **2. Equipment Standards**  
 ## **2.1. Cleaning Supplies**  
 - **Shampoo:** Dog-specific, hypoallergenic, pH-balanced for canine skin (5.5–7.2 pH).  
