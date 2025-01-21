@@ -2,7 +2,7 @@
 ![](Images/Dog%20Small.jpeg)
 
 ### Disclaimer:
-This is a fictive Standard to show case how to develop a standard using GitHub, SmartGit and Obsidian.
+This is a fictive Standard to show case how to develop a standard using [GitHub](https://github.com/danielsiegl/CanineCleansingStandard), [SmartGit](https://www.syntevo.com/smartgit/) and [Obsidian](https://obsidian.md/).
 
 ### Published version:
 https://danielsiegl.github.io/CanineCleansingStandard/
