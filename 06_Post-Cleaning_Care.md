@@ -6,4 +6,5 @@ If you want to contribute please <a href="{{ site.github.repository_url }}/edit/
 - Inspect ears and clean gently with a vet-approved solution.  
 
 ## **6.2. Reward**  
-- Offer treats or affection to positively reinforce the experience.  
+- Offer treats or affection to positively reinforce the experience.
+- A proposed change.
