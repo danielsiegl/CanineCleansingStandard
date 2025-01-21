@@ -19,3 +19,8 @@ A systematic guide to maintaining optimal cleanliness and hygiene for your dog.
 7. [Frequency Recommendations](07_Frequency_Recommendations.md)
 8. [Emergency Exceptions](08_Emergency_Exceptions.md)
 9. [Endorsement](09_Endorsement.md)
+
+[05_Drying_Protocol](05_Drying_Protocol.md)
+
+
+![](Images/Dog%20Small.jpeg)
