@@ -1,12 +1,15 @@
-![](Images/Dog%20Small.jpeg)
+---
+title: CCS-2025 Overview
+---
 
-### **The Canine Cleansing Standard (CCS-2025)**  
+# **The Canine Cleansing Standard (CCS-2025) Overview**  
 A systematic guide to maintaining optimal cleanliness and hygiene for your dog.
-### Disclaimer:
+
+## Document Purpose:
 This is a fictive Standard to show case how to develop a standard using [GitHub](https://github.com/danielsiegl/CanineCleansingStandard), [SmartGit](https://www.syntevo.com/smartgit/) and [Obsidian](https://obsidian.md/).
-Published version: [https://danielsiegl.github.io/CanineCleansingStandard/](https://danielsiegl.github.io/CanineCleansingStandard/)
-### Structure
-The web entry point is [index.md](index.md) and then the details are in in the detail pages:
+
+## CSS-2025 Table of Contents  
+ 
 1. [Purpose](01_Purpose.md)
 2. [Equipment Standards](02_Equipment_Standards.md)
 3. [Preparation](03_Preparation.md)
