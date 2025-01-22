@@ -3,7 +3,6 @@ layout: default
 title: CCS-2025 - Preparation
 description: The Canine Cleansing Standard (CCS-2025)
 ---
-If you want to contribute please <a href="{{ site.github.repository_url }}/edit/main/{{ page.path'}}/">Propose your Changes</a>
 # **3. Preparation**  
 
 ## **3.1. Pre-Cleaning Check**  
