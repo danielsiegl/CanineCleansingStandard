@@ -1,7 +1,3 @@
----
-layout: default
----
-If you want to contribute please <a href="{{ site.github.repository_url }}/edit/main/{{ page.path'}}/">Propose your Changes</a>
 ![](Images/Dog%20Small.jpeg)
 
 ### Disclaimer:

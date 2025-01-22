@@ -1,3 +1,7 @@
+---
+layout: default
+title: CCS-2025 - Equipment Standards
+---
 <a href="{{ site.github.repository_url }}/edit/main/{{ page.path'}}/">Propose Changes</a>
 # **2. Equipment Standards**  
 ## **2.1. Cleaning Supplies**  

@@ -1,3 +1,7 @@
+---
+layout: default
+title: CCS-2025 - Frequency Recommendations
+---
 If you want to contribute please <a href="{{ site.github.repository_url }}/edit/main/{{ page.path'}}/">Propose your Changes</a>
 # **7. Frequency Recommendations**  
 
