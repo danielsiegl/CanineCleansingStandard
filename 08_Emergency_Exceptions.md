@@ -1,4 +1,8 @@
-If you want to contribute please <a href="{{ site.github.repository_url }}/edit/main/{{ page.path'}}/">Propose your Changes</a>
+---
+layout: default
+title: CCS-2025 - Emergency Exceptions
+description: The Canine Cleansing Standard (CCS-2025)
+---
 # **8. Emergency Exceptions**  
 
 In the event of exposure to irritants (e.g., mud, skunk spray), follow this adjusted protocol:  

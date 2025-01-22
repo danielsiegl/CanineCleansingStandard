@@ -1,4 +1,8 @@
-If you want to contribute please <a href="{{ site.github.repository_url }}/edit/main/{{ page.path'}}/">Propose your Changes</a>
+---
+layout: default
+title: CCS-2025 - Cleaning Procedure
+description: The Canine Cleansing Standard (CCS-2025)
+---
 # **4. Cleaning Procedure**  
 
 ## **4.1. Wetting the Dog**  

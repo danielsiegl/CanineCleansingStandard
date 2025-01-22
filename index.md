@@ -1,5 +1,10 @@
-![](Images/Dog%20Small.jpeg)
+---
+layout: default
+title: CCS-2025 Overview
+description: The Canine Cleansing Standard (CCS-2025)
+---
 
+# CCS-2025 Overview
 ### Disclaimer:
 This is a fictive Standard to show case how to develop a standard using [GitHub](https://github.com/danielsiegl/CanineCleansingStandard), [SmartGit](https://www.syntevo.com/smartgit/) and [Obsidian](https://obsidian.md/).
 
