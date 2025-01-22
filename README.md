@@ -1,10 +1,3 @@
----
-layout: default
-title: CCS-2025 Overview
-description: The Canine Cleansing Standard (CCS-2025)
----
-
-# CCS-2025 Overview README
 ![](Images/Dog%20Small.jpeg)
 
 ### Disclaimer:
