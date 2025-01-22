@@ -13,12 +13,12 @@
             "state": {
               "type": "markdown",
               "state": {
-                "file": "index.md",
+                "file": "01_Purpose.md",
                 "mode": "source",
-                "source": true
+                "source": false
               },
               "icon": "lucide-file",
-              "title": "index"
+              "title": "01_Purpose"
             }
           }
         ]
@@ -164,8 +164,11 @@
   },
   "active": "9644c113db7ac6ba",
   "lastOpenFiles": [
-    "another-page.md",
+    "thumbnail.png.~tmp",
+    "03_Preparation.md",
+    "08_Emergency_Exceptions.md",
     "index.md",
+    "another-page.md",
     "README.md",
     "09_Endorsement.md",
     "thumbnail.png",
@@ -184,12 +187,10 @@
     "docs",
     "01_Purpose.md",
     "02_Equipment_Standards.md",
-    "03_Preparation.md",
     "04_Cleaning_Procedure.md",
     "05_Drying_Protocol.md",
     "06_Post-Cleaning_Care.md",
     "07_Frequency_Recommendations.md",
-    "08_Emergency_Exceptions.md",
     "src-jekyll/assets/img/syntevo.svg",
     "src-jekyll/assets/img/smartsvn.svg",
     "Images/Dog Towel.png"

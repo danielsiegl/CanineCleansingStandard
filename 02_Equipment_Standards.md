@@ -1,6 +1,7 @@
 ---
 layout: default
 title: CCS-2025 - Equipment Standards
+description: The Canine Cleansing Standard (CCS-2025)
 ---
 <a href="{{ site.github.repository_url }}/edit/main/{{ page.path'}}/">Propose Changes</a>
 # **2. Equipment Standards**  
