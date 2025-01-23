@@ -1,5 +1,4 @@
 ---
-layout: default
 title: CCS-2025 - Equipment Standards
 ---
 # **2. Equipment Standards**  

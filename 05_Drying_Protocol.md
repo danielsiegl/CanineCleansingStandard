@@ -2,7 +2,7 @@
 title: CCS-2025 - Drying Protocol
 ---
 # **5. Drying Protocol**  
-![](Images/Dog%20Towel.png)
+
 ## **5.1. Towel Drying**  
 - Pat dry with an absorbent towel. Avoid vigorous rubbing to prevent matting or irritation.  
 - Requires a washable Towel washed with mild washing powder at a minimum of 60 Degrees Celsius
