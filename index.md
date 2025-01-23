@@ -3,19 +3,27 @@ title: CCS-2025 Overview
 ---
 
 # **The Canine Cleansing Standard (CCS-2025) Overview**  
-A systematic guide to maintaining optimal cleanliness and hygiene for your dog.
-
+The Ultimate Guide to Grooming and Bathing Your Dog. A systematic and standardized approach to maintaining optimal cleanliness and hygiene for your dog.
 ## Document Purpose:
-This is a fictive Standard to show case how to develop a standard using [GitHub](https://github.com/danielsiegl/CanineCleansingStandard), [SmartGit](https://www.syntevo.com/smartgit/) and [Obsidian](https://obsidian.md/).
+This is a fictitious Standard to show case how to develop a standard using [GitHub](https://github.com/danielsiegl/CanineCleansingStandard), [SmartGit](https://www.syntevo.com/smartgit/) and [Obsidian](https://obsidian.md/).
 
-## CSS-2025 Table of Contents  
+## CCS-2025 Table of Contents  
  
 1. [Purpose](01_Purpose.md)
+   Explanation of the objectives and goals of the Canine Cleansing Standard.
 2. [Equipment Standards](02_Equipment_Standards.md)
+   Specifications and requirements for tools and products used in canine cleansing.
 3. [Preparation](03_Preparation.md)
+   Guidelines on preparing the dog and environment for the cleansing process.
 4. [Cleaning Procedure](04_Cleaning_Procedure.md)
+   Step-by-step instructions for effectively cleaning your dog.
 5. [Drying Protocol](05_Drying_Protocol.md)
+   Methods and best practices for drying your dog post-cleaning.
 6. [Post Cleaning Care](06_Post-Cleaning_Care.md)
+   Recommendations for maintaining your dog's hygiene after cleansing.
 7. [Frequency Recommendations](07_Frequency_Recommendations.md)
+   Suggested intervals for regular cleansing to ensure optimal health.
 8. [Emergency Exceptions](08_Emergency_Exceptions.md)
+   Procedures to follow in case of urgent or unexpected situations.
 9. [Endorsement](09_Endorsement.md)
+   Information on official recognition and support for the standard.
