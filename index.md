@@ -26,4 +26,5 @@ This is a fictitious Standard to show case how to develop a standard using [GitH
 8. [Emergency Exceptions](08_Emergency_Exceptions.md)<br>
    Procedures to follow in case of urgent or unexpected situations.
 9. [Endorsement](09_Endorsement.md)<br>
+
    Information on official recognition and support for the standard.
