@@ -3,11 +3,11 @@ title: CCS-2025 - Endorsement
 ---
 # 10. Eco-Friendly Cleaning
 
-This section explains how to clean your dog in a way that’s better for the environment and safer for your pet. It gives tips on using eco-friendly products, saving water, and reducing waste, all while keeping your dog clean and healthy.
+This section explains how to clean your dog in a way thatâ€™s better for the environment and safer for your pet. It gives tips on using eco-friendly products, saving water, and reducing waste, all while keeping your dog clean and healthy.
 
 ## 10.1 Sustainable Products
-- **Biodegradable Grooming Products**: Use shampoos and conditioners that break down naturally and don’t contain harmful chemicals or microplastics. Look for labels like "EU Ecolabel" or "Blauer Engel" to make sure the products are eco-friendly.
-- **Natural Options**: Choose grooming products made from plants, like oatmeal or aloe vera shampoos. They’re gentle on your dog’s skin and better for the planet.
+- **Biodegradable Grooming Products**: Use shampoos and conditioners that break down naturally and donâ€™t contain harmful chemicals or microplastics. Look for labels like "EU Ecolabel" or "Blauer Engel" to make sure the products are eco-friendly.
+- **Natural Options**: Choose grooming products made from plants, like oatmeal or aloe vera shampoos. Theyâ€™re gentle on your dogâ€™s skin and better for the planet.
 
 ## 10.2 Ways to Save Water
 - **Use Less Water**: Try water-saving showerheads or sprayers to cut down on how much water you use.
@@ -27,12 +27,13 @@ This section explains how to clean your dog in a way that’s better for the envir
 - **Reduce Plastic Waste**: Buy grooming products in bulk or use refillable containers to cut down on packaging waste.
 
 ## 10.6 Why Go Eco-Friendly?
-- **Better for Your Dog**: Eco-friendly products are usually milder and safer for your dog’s skin and fur.
+- **Better for Your Dog**: Eco-friendly products are usually milder and safer for your dogâ€™s skin and fur.
 - **Helps the Environment**: Using less energy and water, along with sustainable materials, reduces your impact on the planet.
 - **Saves Money**: Making your own products and using natural drying methods can save you money compared to buying traditional grooming items.
 
 ---
 
 By following these eco-friendly cleaning tips, you can keep your dog healthy and clean while also protecting the environment. Small changes like these can make a big difference for our planet and your pet!
+
 
 
