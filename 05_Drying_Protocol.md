@@ -14,3 +14,6 @@ title: CCS-2025 - Drying Protocol
 - Not more than 20 m/s
 - Always dry from top to bot
 - If the dog reacts aggressively, frightened or nervous to the sound of the hairdryer, switch to ** Towel Drying** and do not risk the dog`s our your health!
+
+## 5.3 Drying Environment
+- The dog drying should take place in an environment between 15 and 15 Degrees Celsius
