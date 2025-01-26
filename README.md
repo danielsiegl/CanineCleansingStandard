@@ -16,4 +16,4 @@ The web entry point is [index.md](index.md) and then the details are in in the d
 7. [Frequency Recommendations](07_Frequency_Recommendations.md)
 8. [Emergency Exceptions](08_Emergency_Exceptions.md)
 9. [Endorsement](09_Endorsement.md)
-1. [Eco-Friendly Cleaning](10_Eco-Friendly_Cleaning.md)
+10. [Eco-Friendly Cleaning](10_Eco-Friendly_Cleaning.md)
