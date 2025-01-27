@@ -1,7 +1,6 @@
 ---
 title: CCS-2025 Overview
 ---
-
 # **The Canine Cleansing Standard (CCS-2025)**  
 The Ultimate Guide to Grooming and Bathing Your Dog. A systematic and standardized approach to maintaining optimal cleanliness and hygiene for your dog.
 ## Document Purpose:
