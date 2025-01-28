@@ -7,6 +7,8 @@ The Ultimate Guide to Grooming and Bathing Your Dog. A systematic and standardiz
 This is a fictitious Standard to show case how to develop a standard using [GitHub](https://github.com/danielsiegl/CanineCleansingStandard), [SmartGit](https://www.syntevo.com/smartgit/) and [Obsidian](https://obsidian.md/).
 
 ## CCS-2025 Table of Contents  
+
+
  
 1. [Purpose](01_Purpose.md)<br>
    Explanation of the objectives and goals of the Canine Cleansing Standard.
