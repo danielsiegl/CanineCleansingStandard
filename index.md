@@ -26,7 +26,8 @@ This is a fictitious Standard to show case how to develop a standard using [GitH
    Suggested intervals for regular cleansing to ensure optimal health.
 8. [Emergency Exceptions](08_Emergency_Exceptions.md)<br>
    Procedures to follow in case of urgent or unexpected situations.
-9. [Endorsement](09_Endorsement.md)<br>
-   Information on official recognition and support for the standard.
-10. [Eco-Friendly Cleaning](10_Eco-Friendly_Cleaning.md)<br>
+9. [Eco-Friendly Cleaning](09_Eco-Friendly_Cleaning.md)<br>
    How to clean in an eco friendly way.
+10. [Endorsement](10_Endorsement.md)<br>
+   Information on official recognition and support for the standard.
+
