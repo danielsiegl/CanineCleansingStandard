@@ -1,5 +1,5 @@
 # Sample workflow for building and deploying a Jekyll site to GitHub Pages
-name: Run create single markdown file
+name: Create a PDF Version of Canine Cleansing Standard
 
 on:
   # Let's run this on every commti
