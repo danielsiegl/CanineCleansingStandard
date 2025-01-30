@@ -2,7 +2,7 @@
 name: Create a PDF Version of Canine Cleansing Standard
 
 on:
-  # Let's run this on every commti
+  # Let's run this on every commit
   push:
 
 jobs:
@@ -133,7 +133,7 @@ jobs:
         uses: actions/upload-artifact@v4
         with:
           name: SingleMarkDownFile
-          path: $ouputFile
+          path: outputmarkdown.md
           retention-days: 5
       
       - name: Run Pandoc to create PDF
