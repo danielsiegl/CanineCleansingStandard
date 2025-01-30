@@ -105,5 +105,6 @@ foreach ($page in $pageCollection) {
 }
 
 Set-Content -Encoding UTF8 -Path $ouputFile -Value $outputMarkdown
+Get-Content $ouputFile >> $env:GITHUB_STEP_SUMMARY
 
 
