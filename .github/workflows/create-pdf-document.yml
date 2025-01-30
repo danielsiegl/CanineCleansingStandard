@@ -1,5 +1,5 @@
 # Sample workflow for building and deploying a Jekyll site to GitHub Pages
-name: Run create single markdown file
+name: Create a PDF Version of Canine Cleansing Standard
 
 on:
   # Let's run this on every commti
@@ -129,10 +129,24 @@ jobs:
 
           Get-Content $ouputFile  >> $env:GITHUB_STEP_SUMMARY
 
-      - name: Publish Model Artifact
+      - name: Publish single markdown file
         uses: actions/upload-artifact@v4
         with:
           name: SingleMarkDownFile
           path: $ouputFile
           retention-days: 5
+      
+      - name: Run Pandoc to create PDF
+        uses: docker://pandoc/latex:latest
+        with:
+            args: outputmarkdown.md -o result.pdf
+
+      - name: Publish PDF
+        uses: actions/upload-artifact@v4
+        with:
+          name: PDF Rendering
+          path: result.pdf
+          retention-days: 5
+  
+      
 
