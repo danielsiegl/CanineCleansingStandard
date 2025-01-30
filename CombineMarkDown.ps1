@@ -7,6 +7,7 @@
 $ouputFile = "outputmarkdown.md"
 $readmeFile = "README.md"
 $indexFile = "index.md"   
+$commitHash = git rev-parse --short HEAD
 $markdownFileNames = @(Get-ChildItem -Path *.md -Exclude $readmeFile, $indexFile, $ouputFile)
 
 $fileCount = $markdownFileNames.Length
@@ -57,9 +58,9 @@ $outputMarkdown +="header-includes: |`n"
 $outputMarkdown +="   \usepackage{fancyhdr}`n"
 $outputMarkdown +="   \pagestyle{fancy}`n"
 $outputMarkdown +="   \fancyhf{}`n"
-$outputMarkdown +="   \fancyhead[R]{Created: \date{\today}}`n"
+$outputMarkdown +="   \fancyhead[R]{Created: \date{\today} $commitHash}`n"
 $outputMarkdown +="   \fancyfoot[R]{\newline{\thepage}}`n"
-$outputMarkdown +="   \fancyfoot[L]{\tiny{https://github.com/danielsiegl/CanineCleansingStandard/commit/9b1fda051ff3842d84b6c8ad1cc0d3c0589a3962}}`n"
+$outputMarkdown +="   \fancyfoot[L]{\tiny{https://github.com/danielsiegl/CanineCleansingStandard/commit/$commitHash}}`n"
 $outputMarkdown +="---`n"
 
 foreach ($page in $pageCollection) {
