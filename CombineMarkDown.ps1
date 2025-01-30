@@ -1,8 +1,20 @@
+# This powershell script demonstrates how to create a single markdown file from multiple markdown files
+# and replace the internal links with the generated links.
+# The script is part of the Canine Cleansing Standard (CCS-2025) project.
+# The script is used to generate a single markdown file that can be used to generate a PDF using pandoc.
+# pandoc.exe .\outputmarkdown.md -o output.pdf --toc
 
 $ouputFile = "outputmarkdown.md"
-$markdownFileNames = @(Get-ChildItem -Path *.md -Exclude README.md, $ouputFile)
+$readmeFile = "README.md"
+$indexFile = "index.md"   
+$markdownFileNames = @(Get-ChildItem -Path *.md -Exclude $readmeFile, $indexFile, $ouputFile)
 
-$pageCollection = @(foreach ($markdownFilePath in $markdownFileNames) {
+$fileCount = $markdownFileNames.Length
+Write-Output "Files found: $FileCount"
+
+$pageCollection = @()
+
+foreach ($markdownFilePath in $markdownFileNames) {
     Write-Output "Processing $markdownFilePath"
     $markdownFileName = $markdownFilePath.Name
     Write-Output "File name: $markdownFileName"
@@ -20,14 +32,17 @@ $pageCollection = @(foreach ($markdownFilePath in $markdownFileNames) {
         Write-Output "No headlines found in the Markdown file."
     }
 
-    New-Object -Type PSObject -Property @{
+    $pageCollection += New-Object -Type PSObject -Property @{
       'Filename' = $markdownFileName
       'Path' = $markdownFilePath
       'Headline' = $firstHeadline
       'Content' = $fileContent
       'Linkstring' = [uri]::EscapeDataString($firstHeadline).Replace("%23%20","#").Replace("%2A","").Replace("%3F","").Replace("%2C","").Replace("%2F","").Replace("%3A","").Replace("%3B","").Replace("%3D","").Replace("%40","").Replace("%26","").Replace("%3C","").Replace("%3E","").Replace("%22","").Replace("%7B","").Replace("%7D","").Replace("%7C","").Replace("%5C","").Replace("%5E","").Replace("%7E","").Replace("%5B","").Replace("%5D","").Replace("%60","")
     }
-})
+}
+
+Write-Output $pageCollection.Length
+
 
 $outputMarkdown ="";
 foreach ($page in $pageCollection) {
@@ -38,9 +53,17 @@ foreach ($page in $pageCollection) {
    
     # remove jekyll properties
     $insideFrontMatter = $false
-    $filteredContent = @()
+    $filteredContent = ""
 
+    $filteredContent +="---`n"
+    $filteredContent +="title: The Canine Cleansing Standard (CCS-2025)`n"
+    $filteredContent +="toc: true`n"
+    $filteredContent +="include-before: |`n"
+    $filteredContent +="   The Ultimate Guide to Grooming and Bathing Your Dog. A systematic and standardized approach to maintaining optimal cleanliness and hygiene for your dog.\newline`n"
+    $filteredContent +="   This is a fictitious Standard to show case how to develop a standard using [GitHub](https://github.com/danielsiegl/CanineCleansingStandard), [SmartGit](https://www.syntevo.com/smartgit/) and [Obsidian](https://obsidian.md/)\newpage"
+    $filteredContent +="`n---`n"
     # Loop through each line and remove the front matter
+    $filteredContent += "\newpage`n`n"
     foreach ($line in $pageContent) {
         if ($line -eq "---") {
             # Toggle the state when encountering ---
@@ -49,14 +72,16 @@ foreach ($page in $pageCollection) {
         }
         # If not inside the front matter block, add the line to the output
         if (-not $insideFrontMatter) {
-            $filteredContent += $line +"`r`n"
+            $optimizedLine = $line.Trim()
+            # Write-Output " ***$optimizedLine***"
+            $filteredContent += "$optimizedLine`n"
         }
     }
 
     # internal link: [Drying Protocol](#5.%20Drying%20Protocol)<br>
     # External link:[Post Cleaning Care](06_Post-Cleaning_Care.md)<br>
 
-    $outputMarkdown += $filteredContent 
+    $outputMarkdown += $filteredContent
     Write-Output "$pageFilename $pageHeadline $pageLinkString"
 }
 
@@ -65,6 +90,7 @@ foreach ($page in $pageCollection) {
     $pageLinkString = $page.LinkString
     $pageFilename = $page.Filename
     $outputMarkdown = $outputMarkdown -replace $pageFilename, $pageLinkString
+    Write-Output "Replace: ***$pageFilename*** ***$pageLinkString***"
 }
 
 Set-Content -Encoding UTF8 -Path $ouputFile -Value $outputMarkdown
