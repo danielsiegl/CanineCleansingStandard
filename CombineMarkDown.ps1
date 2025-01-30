@@ -45,6 +45,23 @@ Write-Output $pageCollection.Length
 
 
 $outputMarkdown ="";
+
+$outputMarkdown +="---`n"
+$outputMarkdown +="title: The Canine Cleansing Standard (CCS-2025)`n"
+$outputMarkdown +="author: 'https://github.com/danielsiegl/CanineCleansingStandard/'`n"
+$outputMarkdown +="toc: true`n"
+$outputMarkdown +="include-before: |`n"
+$outputMarkdown +="   The Ultimate Guide to Grooming and Bathing Your Dog. A systematic and standardized approach to maintaining optimal cleanliness and hygiene for your dog.\newline`n"
+$outputMarkdown +="   This is a fictitious Standard to show case how to develop a standard using [GitHub](https://github.com/danielsiegl/CanineCleansingStandard), [SmartGit](https://www.syntevo.com/smartgit/) and [Obsidian](https://obsidian.md/)\newpage`n"
+$outputMarkdown +="header-includes: |`n"
+$outputMarkdown +="   \usepackage{fancyhdr}`n"
+$outputMarkdown +="   \pagestyle{fancy}`n"
+$outputMarkdown +="   \fancyhf{}`n"
+$outputMarkdown +="   \fancyhead[R]{Created: \date{\today}}`n"
+$outputMarkdown +="   \fancyfoot[R]{\newline{\thepage}}`n"
+$outputMarkdown +="   \fancyfoot[L]{\tiny{https://github.com/danielsiegl/CanineCleansingStandard/commit/9b1fda051ff3842d84b6c8ad1cc0d3c0589a3962}}`n"
+$outputMarkdown +="---`n"
+
 foreach ($page in $pageCollection) {
     $pageContent = $page.Content
     $pageHeadline = $page.Headline
@@ -55,13 +72,6 @@ foreach ($page in $pageCollection) {
     $insideFrontMatter = $false
     $filteredContent = ""
 
-    $filteredContent +="---`n"
-    $filteredContent +="title: The Canine Cleansing Standard (CCS-2025)`n"
-    $filteredContent +="toc: true`n"
-    $filteredContent +="include-before: |`n"
-    $filteredContent +="   The Ultimate Guide to Grooming and Bathing Your Dog. A systematic and standardized approach to maintaining optimal cleanliness and hygiene for your dog.\newline`n"
-    $filteredContent +="   This is a fictitious Standard to show case how to develop a standard using [GitHub](https://github.com/danielsiegl/CanineCleansingStandard), [SmartGit](https://www.syntevo.com/smartgit/) and [Obsidian](https://obsidian.md/)\newpage"
-    $filteredContent +="`n---`n"
     # Loop through each line and remove the front matter
     $filteredContent += "\newpage`n`n"
     foreach ($line in $pageContent) {
