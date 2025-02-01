@@ -4,10 +4,14 @@ name: Build on Push
 
 on:
     push:
+        branches:
+            - '**'
+        tags-ignore:
+            - '*'
 
 # Sets permissions of the GITHUB_TOKEN to allow deployment to GitHub Pages
 permissions:
-    contents: read
+    contents: write
     pages: write
     id-token: write
      
