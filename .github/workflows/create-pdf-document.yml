@@ -145,7 +145,7 @@ jobs:
           retention-days: 5
       
       - name: Upload binaries to release
-        if: github.event_name == 'workflow_call' && github.event.inputs.mode == 'release'
+        if: ${{ inputs.mode == 'release' }}
         uses: svenstaro/upload-release-action@2.9.0
         with:
             repo_token: ${{ secrets.GITHUB_TOKEN }}
@@ -153,5 +153,6 @@ jobs:
             asset_name: result.pdf
             tag: ${{ github.ref }}
             overwrite: true
+            
  
 
