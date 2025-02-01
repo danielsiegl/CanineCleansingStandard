@@ -1,0 +1,95 @@
+# Workflow for building and deploying a Jekyll site to GitHub Pages
+name: Create and Deploy Jekyll with GitHub Pages dependencies preinstalled
+
+
+on:
+  workflow_call:
+    inputs:
+      version:
+        required: true
+        type: string
+      mode:
+        required: true
+        type: string
+
+
+# Sets permissions of the GITHUB_TOKEN to allow deployment to GitHub Pages
+permissions:
+  contents: read
+  pages: write
+  id-token: write
+
+# Allow only one concurrent deployment, skipping runs queued between the run in-progress and latest queued.
+# However, do NOT cancel in-progress runs as we want to allow these production deployments to complete.
+concurrency:
+  group: "pages"
+  cancel-in-progress: false
+
+jobs:
+  # Build job
+  build:
+    defaults:
+      run:
+        shell: pwsh
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Setup Pages
+        uses: actions/configure-pages@v5
+            
+      - name: Inject Version Information
+        id: injectVersion
+        shell: pwsh
+        run: | 
+          $version = "${{ inputs.version }}"
+          $mode = "${{ inputs.mode }}"
+          Write-Output "Input Version: $version"
+          Write-Output "Input Mode: $mode"
+          Write-Output "Start preparing version information"
+          
+          $commitHash = git rev-parse --short HEAD
+          
+          if ($mode -eq 'build') 
+          {
+            $verboseVersion = "Draft: $version-$commitHash"
+          }
+          else
+          {
+            $verboseVersion = "Release: $version-$commitHash"
+          }
+
+          Write-Output "Version: '$version'"
+          Write-Output "Mode: '$mode'"
+          Write-Output "CommitHash: '$commitHash'"
+          Write-Output "VerboseVersion: '$verboseVersion'"
+        
+          # now we need to inject this information into the _config.yml file or default.html file
+          $configFile = "_config.yml"
+          $configContent = Get-Content -Path $configFile -Raw
+
+          Set-Content -Path $configFile -Value ($configContent -replace 'versionToken', "version: $verboseVersion")
+        
+      - name: Build with Jekyll
+        uses: actions/jekyll-build-pages@v1
+        with:
+          source: ./
+          destination: ./_site
+
+      - name: Upload artifact
+        uses: actions/upload-pages-artifact@v3
+
+  # Deployment job
+  deploy:
+    if: ${{ github.event.inputs.mode == 'release' }}
+    # Add a dependency to the build job
+    needs: build
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
+    runs-on: ubuntu-latest
+    steps:
+      - name: Deploy to GitHub Pages
+        id: deployment
+        uses: actions/deploy-pages@v4

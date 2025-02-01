@@ -1,12 +1,18 @@
-# This workflow thakes the pages from GitHub Pages and creates a single markdown file 
+# This workflow takes the pages from GitHub Pages and creates a single markdown file 
 # that can be used to generate a PDF using pandoc.
 # The workflow is triggered on every commit to the repository.
 
 name: Create a PDF Version of Canine Cleansing Standard
 
 on:
-  # Let's run this on every commit
-  push:
+  workflow_call:
+    inputs:
+      version:
+        required: true
+        type: string
+      mode:
+        required: true
+        type: string
 
 jobs:
   # Build job
@@ -137,6 +143,15 @@ jobs:
           name: PDF Rendering
           path: result.pdf
           retention-days: 5
-  
       
+      - name: Upload binaries to release
+        if: github.event_name == 'workflow_call' && github.event.inputs.mode == 'release'
+        uses: svenstaro/upload-release-action@2.9.0
+        with:
+            repo_token: ${{ secrets.GITHUB_TOKEN }}
+            file: ./result.pdf
+            asset_name: result.pdf
+            tag: ${{ github.ref }}
+            overwrite: true
+ 
 
