@@ -1,4 +1,7 @@
-# Sample workflow for building and deploying a Jekyll site to GitHub Pages
+# This workflow thakes the pages from GitHub Pages and creates a single markdown file 
+# that can be used to generate a PDF using pandoc.
+# The workflow is triggered on every commit to the repository.
+
 name: Create a PDF Version of Canine Cleansing Standard
 
 on:
@@ -25,6 +28,7 @@ jobs:
           # The script is used to generate a single markdown file that can be used to generate a PDF using pandoc.
           # pandoc.exe .\outputmarkdown.md -o output.pdf --toc
 
+          $pandocHeaderFile = "_layouts/pandocheader.tex"
           $ouputFile = "outputmarkdown.md"
           $readmeFile = "README.md"
           $indexFile = "index.md"   
@@ -65,24 +69,9 @@ jobs:
 
           Write-Output $pageCollection.Length
 
-
-          $outputMarkdown ="";
-
-          $outputMarkdown +="---`n"
-          $outputMarkdown +="title: The Canine Cleansing Standard (CCS-2025)`n"
-          $outputMarkdown +="author: 'https://github.com/danielsiegl/CanineCleansingStandard/'`n"
-          $outputMarkdown +="toc: true`n"
-          $outputMarkdown +="include-before: |`n"
-          $outputMarkdown +="   The Ultimate Guide to Grooming and Bathing Your Dog. A systematic and standardized approach to maintaining optimal cleanliness and hygiene for your dog.\newline`n"
-          $outputMarkdown +="   This is a fictitious Standard to show case how to develop a standard using [GitHub](https://github.com/danielsiegl/CanineCleansingStandard), [SmartGit](https://www.syntevo.com/smartgit/) and [Obsidian](https://obsidian.md/)\newpage`n"
-          $outputMarkdown +="header-includes: |`n"
-          $outputMarkdown +="   \usepackage{fancyhdr}`n"
-          $outputMarkdown +="   \pagestyle{fancy}`n"
-          $outputMarkdown +="   \fancyhf{}`n"
-          $outputMarkdown +="   \fancyhead[R]{Created: \date{\today} $commitHash}`n"
-          $outputMarkdown +="   \fancyfoot[R]{\newline{\thepage}}`n"
-          $outputMarkdown +="   \fancyfoot[L]{\tiny{https://github.com/danielsiegl/CanineCleansingStandard/commit/$commitHash}}`n"
-          $outputMarkdown +="---`n"
+          # Read and add Latex Header file to Output Markdown
+          $outputMarkdown = Get-Content $pandocHeaderFile -Raw
+          $outputMarkdown = $outputMarkdown.Replace("\def\commitid",$commitHash)
 
           foreach ($page in $pageCollection) {
               $pageContent = $page.Content
@@ -126,8 +115,9 @@ jobs:
           }
 
           Set-Content -Encoding UTF8 -Path $ouputFile -Value $outputMarkdown
-
-          Get-Content $ouputFile  >> $env:GITHUB_STEP_SUMMARY
+          
+          # Debug output to Git Hub Actions Summary
+          # Get-Content $ouputFile  >> $env:GITHUB_STEP_SUMMARY
 
       - name: Publish single markdown file
         uses: actions/upload-artifact@v4
