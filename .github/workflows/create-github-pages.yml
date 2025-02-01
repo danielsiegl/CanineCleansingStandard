@@ -35,9 +35,6 @@ jobs:
     steps:
       - name: Checkout
         uses: actions/checkout@v4
-
-      - name: Setup Pages
-        uses: actions/configure-pages@v5
             
       - name: Inject Version Information
         id: injectVersion
@@ -68,9 +65,12 @@ jobs:
           # now we need to inject this information into the _config.yml file or default.html file
           $configFile = "_config.yml"
           $configContent = Get-Content -Path $configFile -Raw
-
+          Write-Output "Config Content: $configContent"
           Set-Content -Path $configFile -Value ($configContent -replace 'versionToken', "version: $verboseVersion")
-        
+      
+      - name: Setup Pages
+        uses: actions/configure-pages@v5
+
       - name: Build with Jekyll
         uses: actions/jekyll-build-pages@v1
         with:
@@ -82,7 +82,7 @@ jobs:
 
   # Deployment job
   deploy:
-    if: ${{ github.event.inputs.mode == 'release' }}
+    if: ${{ inputs.mode == 'release' }}
     # Add a dependency to the build job
     needs: build
     environment:
