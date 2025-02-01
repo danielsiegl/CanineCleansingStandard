@@ -1,4 +1,4 @@
-# Sample workflow for building and deploying a Jekyll site to GitHub Pages
+# Workflow for building and deploying a Jekyll site to GitHub Pages
 name: Create and Deploy Jekyll with GitHub Pages dependencies preinstalled
 
 
@@ -43,38 +43,16 @@ jobs:
         id: injectVersion
         shell: pwsh
         run: | 
-          $version = ${{ github.event.inputs.version }}
-          Write-Output "Input Version: '$version'"
-          if ($version -eq "'") 
-          {
-              $version = ""
-          }
-          $mode = ${{ github.event.inputs.mode }}
-          Write-Output "Input Version: '$version'"
-          Write-Output "Input Mode: '$mode'"
+          $version = "${{ inputs.version }}"
+          $mode = "${{ inputs.mode }}"
+          Write-Output "Input Version: $version"
+          Write-Output "Input Mode: $mode"
           Write-Output "Start preparing version information"
           
           $commitHash = git rev-parse --short HEAD
           
           if ($mode -eq 'build') 
           {
-              $draft = $true
-          } else {
-              $draft = $false
-          }
-         
-          #in case this is empty we will use the branchname and DRAFT
-          if (-not $version -or $version -eq '') {
-                       
-              $version = "${{ github.ref_name }}"
-              Write-Output "Version is empty, using branch name: '$version'"
-          }
-          else
-          {
-              Write-Output "Version is not empty"
-          }
-
-          if ($draft) {
             $verboseVersion = "Draft: $version-$commitHash"
           }
           else
@@ -82,10 +60,7 @@ jobs:
             $verboseVersion = "Release: $version-$commitHash"
           }
 
-          # $verboseVersion = [System.Web.HttpUtility]::HtmlEncode($verboseVersion)
-          
           Write-Output "Version: '$version'"
-          Write-Output "Draft: '$draft'"
           Write-Output "Mode: '$mode'"
           Write-Output "CommitHash: '$commitHash'"
           Write-Output "VerboseVersion: '$verboseVersion'"
@@ -107,7 +82,7 @@ jobs:
 
   # Deployment job
   deploy:
-    if : ${{ github.event.inputs.mode }} == 'release'
+    if: ${{ github.event.inputs.mode == 'release' }}
     # Add a dependency to the build job
     needs: build
     environment:
