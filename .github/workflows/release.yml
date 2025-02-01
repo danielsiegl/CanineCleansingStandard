@@ -1,0 +1,41 @@
+# The aim of this workflows is to publish the artifacts on creation of a release.
+# It will be published to GitHub Pages and we will create a PDF and publish it to the release
+
+name: Publish on Release 
+
+on:
+    release:
+      types: [created]
+
+jobs:
+    prepareVersion:
+        runs-on: ubuntu-latest
+        timeout-minutes: 15
+        outputs:
+            versionString: ${{ steps.get_version.outputs.version-without-v }}
+            fullVersionString: ${{ steps.get_version.outputs.version}}
+        steps:
+            - name: Checkout
+              uses: actions/checkout@v4
+              with:
+                fetch-depth: 0 # Mandatory to use the extract version from tag action
+        
+            - name: Extract version from tag
+              id: get_version
+              uses: dhkatz/get-version-action@v3.0.0
+
+    call-createPDF-workflow:
+        uses: ./.github/workflows/create-pdf-document.yml
+        needs: prepareVersion
+        with:
+            version: ${{needs.prepareVersion.outputs.fullVersionString}}
+            mode: "release"
+        secrets: inherit
+
+    call-createPages-workflow:
+        uses: ./.github/workflows/create-github-pages.yml
+        needs: prepareVersion
+        with:
+            version: ${{needs.prepareVersion.outputs.fullVersionString}}
+            mode: "release"
+        secrets: inherit

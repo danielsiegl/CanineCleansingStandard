@@ -1,0 +1,45 @@
+# This workflow shall try to build the jekyll page and PDF to make sure the no bad artifacts are in the branch.
+
+name: Build on Push 
+
+on:
+    push:
+
+# Sets permissions of the GITHUB_TOKEN to allow deployment to GitHub Pages
+permissions:
+    contents: read
+    pages: write
+    id-token: write
+     
+jobs:
+    prepareVersion:
+        runs-on: ubuntu-latest
+        timeout-minutes: 15
+        outputs:
+            versionString: ${{ steps.get_version.outputs.version-without-v }}
+            fullVersionString: ${{ steps.get_version.outputs.version}}
+        steps:
+            - name: Checkout
+              uses: actions/checkout@v4
+              with:
+                fetch-depth: 0 # Mandatory to use the extract version from tag action
+        
+            - name: Extract version from tag
+              id: get_version
+              uses: dhkatz/get-version-action@v3.0.0
+
+    call-createPDF-workflow:
+        uses: ./.github/workflows/create-pdf-document.yml
+        needs: prepareVersion
+        with:
+            version: ${{needs.prepareVersion.outputs.fullVersionString}}
+            mode: "build"
+        secrets: inherit
+
+    call-createPages-workflow:
+        uses: ./.github/workflows/create-github-pages.yml
+        needs: prepareVersion
+        with:
+            version: ${{needs.prepareVersion.outputs.fullVersionString}}
+            mode: "build"
+        secrets: inherit
