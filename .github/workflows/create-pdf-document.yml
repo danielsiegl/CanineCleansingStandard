@@ -58,10 +58,13 @@ jobs:
           if ($mode -eq 'build') 
           {
             $verboseVersion = "Draft-$version-$commitHash"
+            $verboseVersionPDF = "Draft: $version-$commitHash"
+
           }
           else
           {
             $verboseVersion = "Release-$version-$commitHash"
+            $verboseVersionPDF = "Release: $version-$commitHash"
           }
 
           $pdffileName = "$reponame-$verboseVersion.pdf"
@@ -71,6 +74,7 @@ jobs:
           Write-Output "Mode: '$mode'"
           Write-Output "CommitHash: '$commitHash'"
           Write-Output "VerboseVersion: '$verboseVersion'"
+          Write-Output "VerboseVersionPDF: '$verboseVersionPDF'"
           Write-Output "PDF File Name: '$pdffileName'"
          
           Write-Output "pdfFileName=$pdffileName" >>$env:GITHUB_OUTPUT
@@ -113,7 +117,7 @@ jobs:
 
           # Read and add Latex Header file to Output Markdown
           $outputMarkdown = Get-Content $pandocHeaderFile -Raw
-          $outputMarkdown = $outputMarkdown.Replace("\def\commitid",$commitHash)
+          $outputMarkdown = $outputMarkdown.Replace("\def\version",$verboseVersionPDF).Replace("\def\commitid",$commitHash).Replace("\def\tag",$version)
 
           foreach ($page in $pageCollection) {
               $pageContent = $page.Content
