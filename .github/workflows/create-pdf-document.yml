@@ -36,30 +36,31 @@ jobs:
       - name: Create single markdown file
         id: createSingleMarkdown
         run: |
+          Import-Module ./scripts/modules/markdown.psm1
           # This powershell script demonstrates how to create a single markdown file from multiple markdown files
           # and replace the internal links with the generated links.
           # The script is part of the Canine Cleansing Standard (CCS-2025) project.
           # The script is used to generate a single markdown file that can be used to generate a PDF using pandoc.
           # pandoc.exe .\outputmarkdown.md -o output.pdf --toc
 
-          $pandocHeaderFile = "_layouts/pandocheader.tex"
+          #prepare the environment
+
+          $version = "${{ inputs.version }}"
+          $mode = "${{ inputs.mode }}"
+
           $reponame = "${{ github.event.repository.name }}"
+          $commitHash = git rev-parse --short HEAD
+
+          $pandocHeaderFile = "_layouts/pandocheader.tex"
           $ouputFile = "outputmarkdown.md"
           $readmeFile = "README.md"
           $indexFile = "index.md"   
-          $version = "${{ inputs.version }}"
-          $mode = "${{ inputs.mode }}"
-          Write-Output "Input Version: $version"
-          Write-Output "Input Mode: $mode"
-          Write-Output "Start preparing version information"
-          
-          $commitHash = git rev-parse --short HEAD
-          
+         
+          # prepare the verbose version strings
           if ($mode -eq 'build') 
           {
             $verboseVersion = "Draft-$version-$commitHash"
             $verboseVersionPDF = "Draft: $version-$commitHash"
-
           }
           else
           {
@@ -67,103 +68,29 @@ jobs:
             $verboseVersionPDF = "Release: $version-$commitHash"
           }
 
+          # create the pdf file name
           $pdffileName = "$reponame-$verboseVersion.pdf"
 
-          Write-Output "Repository: '$reponame'"
-          Write-Output "Version: '$version'"
-          Write-Output "Mode: '$mode'"
-          Write-Output "CommitHash: '$commitHash'"
-          Write-Output "VerboseVersion: '$verboseVersion'"
-          Write-Output "VerboseVersionPDF: '$verboseVersionPDF'"
-          Write-Output "PDF File Name: '$pdffileName'"
-         
+          # Write the pdffilename to the environment
           Write-Output "pdfFileName=$pdffileName" >>$env:GITHUB_OUTPUT
 
+          Write-Output "Input Version: $version; Input Mode: $mode; Repository: '$reponame'; Version: '$version'; Mode: '$mode'; CommitHash: '$commitHash'; VerboseVersion: '$verboseVersion'; VerboseVersionPDF: '$verboseVersionPDF'; PDF File Name: '$pdffileName'"
+         
+          # Get all markdown files in the repository that should be concatenated
           $markdownFileNames = @(Get-ChildItem -Path *.md -Exclude $readmeFile, $indexFile, $ouputFile)
 
-          $fileCount = $markdownFileNames.Length
-          Write-Output "Files found: $FileCount"
-
-          $pageCollection = @()
-
-          foreach ($markdownFilePath in $markdownFileNames) {
-              Write-Output "Processing $markdownFilePath"
-              $markdownFileName = $markdownFilePath.Name
-              Write-Output "File name: $markdownFileName"
-            
-
-              $fileContent = Get-Content -Path $markdownFilePath -Encoding UTF8
-
-              # Find the first line that starts with a Markdown heading indicator (#)
-              $firstHeadline = $fileContent | Where-Object { $_ -match '^#+\s+' } | Select-Object -First 1
-
-              # Check if a headline was found
-              if ($null -ne $firstHeadline) {
-                  Write-Output "First headline found: $firstHeadline"
-              } else {
-                  Write-Output "No headlines found in the Markdown file."
-              }
-
-              $pageCollection += New-Object -Type PSObject -Property @{
-                'Filename' = $markdownFileName
-                'Path' = $markdownFilePath
-                'Headline' = $firstHeadline
-                'Content' = $fileContent
-                'Linkstring' = [uri]::EscapeDataString($firstHeadline.Trim().Replace("%23%20","#").Replace("%2A","").Replace("%3F","").Replace("%2C","").Replace("%2F","").Replace("%3A","").Replace("%3B","").Replace("%3D","").Replace("%40","").Replace("%26","").Replace("%3C","").Replace("%3E","").Replace("%22","").Replace("%7B","").Replace("%7D","").Replace("%7C","").Replace("%5C","").Replace("%5E","").Replace("%7E","").Replace("%5B","").Replace("%5D","").Replace("%60",""))
-              }
-          }
-
-          Write-Output $pageCollection.Length
+          # Load the markdown files into a collection
+          $pageCollection = Get-Markdown-Files -markdownFileNames $markdownFileNames
 
           # Read and add Latex Header file to Output Markdown
           $outputMarkdown = Get-Content $pandocHeaderFile -Raw
           $outputMarkdown = $outputMarkdown.Replace("\def\version",$verboseVersionPDF).Replace("\def\commitid",$commitHash).Replace("\def\tag",$version)
 
-          foreach ($page in $pageCollection) {
-              $pageContent = $page.Content
-              $pageHeadline = $page.Headline
-              $pageLinkString = $page.LinkString
-              $pageFilename = $page.Filename
-            
-              # remove jekyll properties
-              $insideFrontMatter = $false
-              $filteredContent = ""
+          # Add the content of the markdown files to a single markdown
+          $outputMarkdown += Join-Markdown -pageCollection $pageCollection
 
-              # Loop through each line and remove the front matter
-              $filteredContent += "\newpage`n`n"
-              foreach ($line in $pageContent) {
-                  if ($line -eq "---") {
-                      # Toggle the state when encountering ---
-                      $insideFrontMatter = -not $insideFrontMatter
-                      continue
-                  }
-                  # If not inside the front matter block, add the line to the output
-                  if (-not $insideFrontMatter) {
-                      $optimizedLine = $line.Trim()
-                      # Write-Output " ***$optimizedLine***"
-                      $filteredContent += "$optimizedLine`n"
-                  }
-              }
-
-              # internal link: [Drying Protocol](#5.%20Drying%20Protocol)<br>
-              # External link:[Post Cleaning Care](06_Post-Cleaning_Care.md)<br>
-
-              $outputMarkdown += $filteredContent
-              Write-Output "$pageFilename $pageHeadline $pageLinkString"
-          }
-
-          #now that we have all the content, in a string we need to replace all the file names with the links generated above
-          foreach ($page in $pageCollection) {
-              $pageLinkString = $page.LinkString
-              $pageFilename = $page.Filename
-              $outputMarkdown = $outputMarkdown -replace $pageFilename, $pageLinkString
-              Write-Output "Replace: ***$pageFilename*** ***$pageLinkString***"
-          }
-
+          # Write the output markdown to a file
           Set-Content -Encoding UTF8 -Path $ouputFile -Value $outputMarkdown
-          
-          # Debug output to Git Hub Actions Summary
-          # Get-Content $ouputFile  >> $env:GITHUB_STEP_SUMMARY
 
       - name: Publish single markdown file
         uses: actions/upload-artifact@v4
