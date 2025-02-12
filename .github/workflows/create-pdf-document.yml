@@ -36,12 +36,21 @@ jobs:
       - name: Create single markdown file
         id: createSingleMarkdown
         run: |
-          Import-Module ./scripts/modules/markdown.psm1
           # This powershell script demonstrates how to create a single markdown file from multiple markdown files
           # and replace the internal links with the generated links.
           # The script is part of the Canine Cleansing Standard (CCS-2025) project.
           # The script is used to generate a single markdown file that can be used to generate a PDF using pandoc.
           # pandoc.exe .\outputmarkdown.md -o output.pdf --toc
+
+          # Load the markdown script, modules are hard to load in GitHub Actions
+          $markdownScriptPath = "./.github/scripts/markdown.ps1"
+          if (!(Test-Path -Path $markdownScriptPath)) {
+          Write-Error "The script $markdownScriptPath does not exist."
+          exit 1
+          }
+          chmod +x $markdownScriptPath
+          . $markdownScriptPath
+         
 
           #prepare the environment
 
