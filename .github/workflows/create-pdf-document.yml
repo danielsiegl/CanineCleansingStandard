@@ -43,63 +43,28 @@ jobs:
           # pandoc.exe .\outputmarkdown.md -o output.pdf --toc
 
           # Load the markdown script, modules are hard to load in GitHub Actions
-          $markdownScriptPath = "./.github/scripts/markdown.ps1"
-          if (!(Test-Path -Path $markdownScriptPath)) {
-          Write-Error "The script $markdownScriptPath does not exist."
-          exit 1
-          }
-          chmod +x $markdownScriptPath
-          . $markdownScriptPath
+          . ./.github/scripts/markdown.ps1
          
-
           #prepare the environment
-
           $version = "${{ inputs.version }}"
           $mode = "${{ inputs.mode }}"
-
           $reponame = "${{ github.event.repository.name }}"
           $commitHash = git rev-parse --short HEAD
 
           $pandocHeaderFile = "_layouts/pandocheader.tex"
           $ouputFile = "outputmarkdown.md"
-          $readmeFile = "README.md"
-          $indexFile = "index.md"   
-         
-          # prepare the verbose version strings
-          if ($mode -eq 'build') 
-          {
-            $verboseVersion = "Draft-$version-$commitHash"
-            $verboseVersionPDF = "Draft: $version-$commitHash"
-          }
-          else
-          {
-            $verboseVersion = "Release-$version-$commitHash"
-            $verboseVersionPDF = "Release: $version-$commitHash"
-          }
+          
+          New-SingleMarkdownFile -version $version -mode $mode -reponame $reponame -commitHash $commitHash -pandocHeaderFile $pandocHeaderFile -ouputFile $ouputFile
+          
+          # Compile the PDF file name
+          $versionStrings = New-Version-Strings -mode $mode -version $version -commitHash $commitHash -reponame $reponame
+          $pdffileName = $versionStrings.pdffileName
 
-          # create the pdf file name
-          $pdffileName = "$reponame-$verboseVersion.pdf"
-
+          # Write the output file name to the environment         
+          Write-Output "ouputFile=$ouputFile" >>$env:GITHUB_OUTPUT
+          
           # Write the pdffilename to the environment
           Write-Output "pdfFileName=$pdffileName" >>$env:GITHUB_OUTPUT
-
-          Write-Output "Input Version: $version; Input Mode: $mode; Repository: '$reponame'; Version: '$version'; Mode: '$mode'; CommitHash: '$commitHash'; VerboseVersion: '$verboseVersion'; VerboseVersionPDF: '$verboseVersionPDF'; PDF File Name: '$pdffileName'"
-         
-          # Get all markdown files in the repository that should be concatenated
-          $markdownFileNames = @(Get-ChildItem -Path *.md -Exclude $readmeFile, $indexFile, $ouputFile)
-
-          # Load the markdown files into a collection
-          $pageCollection = Get-Markdown-Files -markdownFileNames $markdownFileNames
-
-          # Read and add Latex Header file to Output Markdown
-          $outputMarkdown = Get-Content $pandocHeaderFile -Raw
-          $outputMarkdown = $outputMarkdown.Replace("\def\version",$verboseVersionPDF).Replace("\def\commitid",$commitHash).Replace("\def\tag",$version)
-
-          # Add the content of the markdown files to a single markdown
-          $outputMarkdown += Join-Markdown -pageCollection $pageCollection
-
-          # Write the output markdown to a file
-          Set-Content -Encoding UTF8 -Path $ouputFile -Value $outputMarkdown
 
       - name: Publish single markdown file
         uses: actions/upload-artifact@v4
@@ -111,7 +76,7 @@ jobs:
       - name: Run Pandoc to create PDF
         uses: docker://pandoc/latex:latest
         with:
-            args: outputmarkdown.md -o ${{steps.createSingleMarkdown.outputs.pdfFileName}} --toc
+            args: ${{steps.createSingleMarkdown.outputs.ouputFile}} -o ${{steps.createSingleMarkdown.outputs.pdfFileName}} --toc
 
       - name: Publish PDF
         uses: actions/upload-artifact@v4

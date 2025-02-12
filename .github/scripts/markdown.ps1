@@ -1,3 +1,35 @@
+function New-SingleMarkdownFile {
+  param (
+    [string]$version,
+    [string]$mode,
+    [string]$reponame,
+    [string]$commitHash,
+    [string]$pandocHeaderFile,
+    [string]$ouputFile
+  )
+
+  
+
+  $versionStrings = New-Version-Strings -mode $mode -version $version -commitHash $commitHash -reponame $reponame
+  $verboseVersionPDF = $versionStrings.verboseVersionPDF
+   
+  # Get all markdown files in the repository that should be concatenated
+  $markdownFileNames = @(Get-ChildItem -Path *.md -Exclude "README.md", "index.md", $ouputFile)
+
+  # Load the markdown files into a collection
+  $pageCollection = Get-Markdown-Files -markdownFileNames $markdownFileNames
+
+  # Read and add Latex Header file to Output Markdown
+  $outputMarkdown = Get-Content $pandocHeaderFile -Raw
+  $outputMarkdown = $outputMarkdown.Replace("\def\version",$verboseVersionPDF).Replace("\def\commitid",$commitHash).Replace("\def\tag",$version)
+
+  # Add the content of the markdown files to a single markdown
+  $outputMarkdown += Join-Markdown -pageCollection $pageCollection
+
+  # Write the output markdown to a file
+  Set-Content -Encoding UTF8 -Path $ouputFile -Value $outputMarkdown
+  }
+
 function Get-Markdown-Files {
   param (
     [string[]]$markdownFileNames
@@ -60,4 +92,24 @@ function Join-Markdown {
     }
 
     return $outputMarkdown
+  }
+  
+function New-Version-Strings {
+    param (
+      [string]$mode,
+      [string]$version,
+      [string]$commitHash,
+      [string]$reponame
+    )
+
+    $prefix = if ($mode -eq 'build') { 'Draft' } else { 'Release' }
+    $verboseVersion = "$prefix-$version-$commitHash"
+    $verboseVersionPDF = "${prefix}: $version-$commitHash"
+    $pdffileName = "$reponame-$verboseVersion.pdf"
+
+    return @{
+      verboseVersion = $verboseVersion
+      verboseVersionPDF = $verboseVersionPDF
+      pdffileName = $pdffileName
+    }
   }
