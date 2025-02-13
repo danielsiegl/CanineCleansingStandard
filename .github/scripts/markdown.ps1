@@ -25,7 +25,7 @@ function New-SingleMarkdownFile {
 
   # Add the content of the markdown files to a single markdown
   $outputMarkdown += Join-Markdown -pageCollection $pageCollection
-
+         
   # Write the output markdown to a file
   Set-Content -Encoding UTF8 -Path $ouputFile -Value $outputMarkdown
   }
