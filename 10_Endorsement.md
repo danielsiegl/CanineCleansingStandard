@@ -3,7 +3,7 @@ title: CCS-2025 - Endorsement
 ---
 # **10. Endorsement**
 
-_This section delineates the formal endorsement of the Canine Cleansing Standard (CCS-2025) by the International Board of Canine Cleanliness (IBCC), affirming its adherence to the highest standards of canine hygiene and welfare._
+_This section delineates the formal endorsement of the Canine Cleansing Standard (CCS-2025) by the fictional International Board of Canine Cleanliness (IBCC), affirming its adherence to the highest standards of canine hygiene and welfare._
 
 ## **10.1. Nature of the Standard**
 
@@ -11,7 +11,7 @@ The Canine Cleansing Standard (CCS-2025) is a fictive standard created to demons
 
 ## **10.2. Endorsing Authority**
 
-The International Board of Canine Cleanliness (IBCC) is a fictional entity established for the purpose of exemplifying governance structures within standards development processes. While the IBCC does not exist as a formal regulatory body, its endorsement within this document is intended to mirror real-world standardization frameworks, thereby providing a practical demonstration of endorsement workflows.
+The fictional International Board of Canine Cleanliness (IBCC) is a fictional entity established for the purpose of exemplifying governance structures within standards development processes. While the IBCC does not exist as a formal regulatory body, its endorsement within this document is intended to mirror real-world standardization frameworks, thereby providing a practical demonstration of endorsement workflows.
 
 ## **10.3. Scope of Endorsement**
 
