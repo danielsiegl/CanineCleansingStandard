@@ -45,23 +45,14 @@ foreach ($markdownFilePath in $markdownFileNames) {
     # Read the content of the markdown file
     $fileContent = Get-Content -Path $markdownFilePath -Encoding UTF8
 
-    # store the frontmatter ina variable
-    $frontmatter = $fileContent -match '---\s*(.*?)\s*---'
-
-    # # remove the frontmatter from the markdown file
-    # if ($fileContent -match '---\s*(.*?)\s*---') {
-    #     $fileContent = $fileContent -replace '---\s*(.*?)\s*---', ''
-    # }
-
     #remove emptylines from the beginning of the file
     $fileContent = $fileContent -replace '^\s*[\r\n]+', ''
 
-  
-
+    # join content with prompt
     $checkPrompt= $prompt+$fileContent
     $ResponseMessage = Invoke-ChatCompletion -Prompt $checkPrompt -ApiKey $apiKey -BaseUrl $baseUrl -Model $model
     
-
+    # the real payload is the in the second element of the array
     $responsePayload = $ResponseMessage[1]
 
     Write-Output $responsePayload
@@ -89,6 +80,11 @@ foreach ($markdownFilePath in $markdownFileNames) {
                 continue
             }
         }
+
+         # If the previous line is a frontmatter marker (---) and the current line is empty, skip it
+         if ($previousLine -match "^(---\s*)$" -and $currentLine.Trim() -eq "") {
+            continue
+        }
         
         # remove the "```" from the end of the file
         if ($currentLine.Trim() -eq '```') {
@@ -100,11 +96,6 @@ foreach ($markdownFilePath in $markdownFileNames) {
             $currentLine = $currentLine.TrimEnd()
         }
         
-        # If the previous line is a frontmatter marker (---) and the current line is empty, skip it
-        if ($previousLine -match "^(---\s*)$" -and $currentLine.Trim() -eq "") {
-            continue
-        }
-
         $processedLines += $currentLine
         $previousLine = $currentLine
     }
