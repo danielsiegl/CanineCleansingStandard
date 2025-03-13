@@ -92,6 +92,9 @@ foreach ($markdownFilePath in $markdownFileNames) {
     # Remove only empty lines after the frontmatter marker '---' while preserving the marker itself
     $updatedFileContent = $updatedFileContent -replace '(?m)^(---\s*[\r\n]+)(?:\s*[\r\n])+', '$1'
 
+    #remove trailing spaces in each line of the file, equivalent to trimright
+    $updatedFileContent = $updatedFileContent -replace '(?m)\s+$', ''
+
     Set-Content -Path $markdownFilePath -Value $updatedFileContent -Encoding UTF8
     
 }
