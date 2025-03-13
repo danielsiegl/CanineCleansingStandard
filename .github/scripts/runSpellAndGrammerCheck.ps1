@@ -56,6 +56,8 @@ foreach ($markdownFilePath in $markdownFileNames) {
     #remove emptylines from the beginning of the file
     $fileContent = $fileContent -replace '^\s*[\r\n]+', ''
 
+  
+
     $checkPrompt= $prompt+$fileContent
     $ResponseMessage = Invoke-ChatCompletion -Prompt $checkPrompt -ApiKey $apiKey -BaseUrl $baseUrl -Model $model
     
@@ -84,8 +86,11 @@ foreach ($markdownFilePath in $markdownFileNames) {
     # remove ```markdown from the beginning of the file
     $updatedFileContent = $updatedFileContent -replace '^```markdown', ""
 
-        #we need to remove empty lines before and after the frontmatter
+    #we need to remove empty lines before and after the frontmatter
     $updatedFileContent = $updatedFileContent -replace '^\s*[\r\n]+', ''
+
+    # Remove only empty lines after the frontmatter marker '---' while preserving the marker itself
+    $updatedFileContent = $updatedFileContent -replace '(?m)^(---\s*[\r\n]+)(?:\s*[\r\n])+', '$1'
 
     Set-Content -Path $markdownFilePath -Value $updatedFileContent -Encoding UTF8
     
