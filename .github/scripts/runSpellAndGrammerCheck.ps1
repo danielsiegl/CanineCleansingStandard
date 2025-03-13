@@ -64,37 +64,25 @@ foreach ($markdownFilePath in $markdownFileNames) {
 
     $responsePayload = $ResponseMessage[1]
 
-
-
-
-
     Write-Output $responsePayload
-    #write the response to the original file
-
-    # #remove emptylines from the frontmatter
-    # $frontmatter = $frontmatter -replace '^\s*[\r\n]+', ''
-
-    #remove emptylines from the beginning of the file
-    # $responsePayload = $responsePayload -replace '^\s*[\r\n]+', ''
-
+   
     # Split the response payload into individual lines
     $lines = $responsePayload -split "`r?`n"
     $processedLines = @()
-    $skippingLeadingEmpty = $true
     $previousLine = $null
 
     foreach ($currentLine in $lines) {
         #firstline handling
-        if(processedLines.Count -eq 0) {
+        if($processedLines.Length -eq 0) {
             # Remove leading and trailing spaces from the first line
             $currentLine = $currentLine.Trim()
             # Remove "'n" from the beginning of the line
             if ($currentLine -match "^'n") {
-                $currentLine = $currentLine -replace "^'n", ""
+                continue
             }
             # Remove "```markdown" from the beginning of the line
-            if ($currentLine -match "^```markdown") {
-                $currentLine = $currentLine -replace "^```markdown", ""
+            if ($currentLine -match '^```markdown') {
+                continue
             }
             #if $currentLine is empty, skip it
             if ($currentLine.Trim() -eq "") {
@@ -102,6 +90,11 @@ foreach ($markdownFilePath in $markdownFileNames) {
             }
         }
         
+        # remove the "```" from the end of the file
+        if ($currentLine.Trim() -eq '```') {
+            continue
+        }
+
         # Remove trailing spaces if the line is not empty
         if ($currentLine.Trim() -ne "") {
             $currentLine = $currentLine.TrimEnd()
@@ -110,12 +103,6 @@ foreach ($markdownFilePath in $markdownFileNames) {
         # If the previous line is a frontmatter marker (---) and the current line is empty, skip it
         if ($previousLine -match "^(---\s*)$" -and $currentLine.Trim() -eq "") {
             continue
-        }
-        
-        # if a line is empty we need to add a new line
-        if ($currentLine.Trim() -eq "" ) 
-        {
-            $currentLine ="'n"
         }
 
         $processedLines += $currentLine
