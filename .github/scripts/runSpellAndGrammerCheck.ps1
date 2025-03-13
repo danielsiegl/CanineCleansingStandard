@@ -48,10 +48,10 @@ foreach ($markdownFilePath in $markdownFileNames) {
     # store the frontmatter ina variable
     $frontmatter = $fileContent -match '---\s*(.*?)\s*---'
 
-    # remove the frontmatter from the markdown file
-    if ($fileContent -match '---\s*(.*?)\s*---') {
-        $fileContent = $fileContent -replace '---\s*(.*?)\s*---', ''
-    }
+    # # remove the frontmatter from the markdown file
+    # if ($fileContent -match '---\s*(.*?)\s*---') {
+    #     $fileContent = $fileContent -replace '---\s*(.*?)\s*---', ''
+    # }
 
     #remove emptylines from the beginning of the file
     $fileContent = $fileContent -replace '^\s*[\r\n]+', ''
@@ -61,22 +61,31 @@ foreach ($markdownFilePath in $markdownFileNames) {
     
 
     $responsePayload = $ResponseMessage[1]
+
+
+
+
+
     Write-Output $responsePayload
     #write the response to the original file
 
-    #remove emptylines from the frontmatter
-    $frontmatter = $frontmatter -replace '^\s*[\r\n]+', ''
+    # #remove emptylines from the frontmatter
+    # $frontmatter = $frontmatter -replace '^\s*[\r\n]+', ''
 
     #remove emptylines from the beginning of the file
-    $responsePayload = $responsePayload -replace '^\s*[\r\n]+', ''
+    # $responsePayload = $responsePayload -replace '^\s*[\r\n]+', ''
 
-    $updatedFileContent = $frontmatter+$responsePayload
+    # $updatedFileContent = $frontmatter+$responsePayload
+    $updatedFileContent=$responsePayload
 
     # remove 'n from the beginning of the file  
     $updatedFileContent = $updatedFileContent -replace "^\'n", ""
 
     # remove ```markdown from the beginning of the file
     $updatedFileContent = $updatedFileContent -replace '^```markdown', ""
+
+        #we need to remove empty lines before and after the frontmatter
+    $updatedFileContent = $updatedFileContent -replace '^\s*[\r\n]+', ''
 
     Set-Content -Path $markdownFilePath -Value $updatedFileContent -Encoding UTF8
     
