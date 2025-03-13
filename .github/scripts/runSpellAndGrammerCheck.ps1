@@ -77,23 +77,52 @@ foreach ($markdownFilePath in $markdownFileNames) {
     #remove emptylines from the beginning of the file
     # $responsePayload = $responsePayload -replace '^\s*[\r\n]+', ''
 
-    # $updatedFileContent = $frontmatter+$responsePayload
-    $updatedFileContent=$responsePayload
+    # Split the response payload into individual lines
+    $lines = $responsePayload -split "`r?`n"
+    $processedLines = @()
+    $skippingLeadingEmpty = $true
+    $previousLine = $null
 
-    # remove 'n from the beginning of the file  
-    $updatedFileContent = $updatedFileContent -replace "^\'n", ""
+    foreach ($currentLine in $lines) {
+        #firstline handling
+        if(processedLines.Count -eq 0) {
+            # Remove leading and trailing spaces from the first line
+            $currentLine = $currentLine.Trim()
+            # Remove "'n" from the beginning of the line
+            if ($currentLine -match "^'n") {
+                $currentLine = $currentLine -replace "^'n", ""
+            }
+            # Remove "```markdown" from the beginning of the line
+            if ($currentLine -match "^```markdown") {
+                $currentLine = $currentLine -replace "^```markdown", ""
+            }
+            #if $currentLine is empty, skip it
+            if ($currentLine.Trim() -eq "") {
+                continue
+            }
+        }
+        
+        # Remove trailing spaces if the line is not empty
+        if ($currentLine.Trim() -ne "") {
+            $currentLine = $currentLine.TrimEnd()
+        }
+        
+        # If the previous line is a frontmatter marker (---) and the current line is empty, skip it
+        if ($previousLine -match "^(---\s*)$" -and $currentLine.Trim() -eq "") {
+            continue
+        }
+        
+        # if a line is empty we need to add a new line
+        if ($currentLine.Trim() -eq "" ) 
+        {
+            $currentLine ="'n"
+        }
 
-    # remove ```markdown from the beginning of the file
-    $updatedFileContent = $updatedFileContent -replace '^```markdown', ""
+        $processedLines += $currentLine
+        $previousLine = $currentLine
+    }
 
-    #we need to remove empty lines before and after the frontmatter
-    $updatedFileContent = $updatedFileContent -replace '^\s*[\r\n]+', ''
-
-    # Remove only empty lines after the frontmatter marker '---' while preserving the marker itself
-    $updatedFileContent = $updatedFileContent -replace '(?m)^(---\s*[\r\n]+)(?:\s*[\r\n])+', '$1'
-
-    #remove trailing spaces in each line of the file, equivalent to trimright
-    $updatedFileContent = $updatedFileContent -replace '(?m)\s+$', ''
+    $updatedFileContent = $processedLines -join "`n"
 
     Set-Content -Path $markdownFilePath -Value $updatedFileContent -Encoding UTF8
     
