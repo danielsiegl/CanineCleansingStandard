@@ -31,6 +31,38 @@ This is a fictitious Standard to show case how to develop a standard using [GitH
 10. [Endorsement](10_Endorsement.md)<br>
    Information on official recognition and support for the standard.
 
+```mermaid
+graph TD;
+    A[Pre-Cleaning Assessment] --> B[Environmental Preparation];
+    B --> C[Equipment Verification];
+    C --> D[Brushing and Detangling];
+    D --> E[Bathing];
+    E --> F[Rinsing];
+    F --> G[Drying];
+    G --> H[Post-Cleaning Care];
+    H --> I[Regular Maintenance];
+
+    subgraph Preparation
+        A
+        B
+        C
+        D
+    end
+
+    subgraph Cleaning
+        E
+        F
+    end
+
+    subgraph Post-Cleaning
+        G
+        H
+        I
+    end
+
+```
+
+
 # Why Creating Standards with GitHub is a Smart Choice
 
 In today's fast-paced digital world, collaboration and transparency are key to creating effective industry standards. Whether in software development, engineering, or even niche areas like canine hygiene (yes, there’s a standard for that!), using GitHub to develop and publish standards provides numerous advantages.
