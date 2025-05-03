@@ -7,7 +7,7 @@ _This section delineates the standardized procedures requisite for the preparato
 
 ## **3.1. Pre-Cleaning Assessment**
 
-Prior to the initiation of the cleansing protocol, it is imperative to conduct a comprehensive evaluation of the canine subject to identify any conditions that may contraindicate or necessitate modifications to the standard procedure.
+Prior to the initiation of the cleansing protocol, it is imperative to conduct a comprehensive evaluation of the canine subject to identify any conditions that may contraindicate or necessitate modifications to the standard procedure. Make sure the room is nice!
 
 - **Dermatological Examination**: Conduct a thorough inspection of the canine's integumentary system to identify any lesions, irritations, or ectoparasitic infestations such as fleas or ticks. The detection of such conditions may require postponement of the cleansing procedure and consultation with a veterinary professional.
     
